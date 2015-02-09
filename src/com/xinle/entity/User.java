@@ -1,11 +1,13 @@
 package com.xinle.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +25,7 @@ public class User {
 	private String phoneNumber;
 	private Date createTime;
 	private Date updateTime;
+	private Set<UserRole> userRole;
 
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -91,6 +94,16 @@ public class User {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	@OneToMany(mappedBy = "user")
+	public Set<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+	
 	
 
 

@@ -18,15 +18,25 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "sys_user_role")
 public class UserRole {
-	private int id;
-	private User user;
-	private Role role;
-	private Date createTime;
-	
+
 	@Id
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@GeneratedValue(generator = "generator")
-	@Column(name = "ID",unique = true, nullable = false, length = 11)
+	@Column(name = "ID", unique = true, nullable = false, length = 11)
+	private int id;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id", referencedColumnName = "id")
+	private Role role;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_time")
+	private Date createTime;
+
 	public int getId() {
 		return id;
 	}
@@ -34,9 +44,7 @@ public class UserRole {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	@ManyToOne(cascade =CascadeType.ALL)
-	@JoinColumn(name = "user_id", referencedColumnName= "id" )
+
 	public User getUser() {
 		return user;
 	}
@@ -45,8 +53,6 @@ public class UserRole {
 		this.user = user;
 	}
 
-	@ManyToOne(cascade =CascadeType.ALL)
-	@JoinColumn(name = "role_id", referencedColumnName = "id")
 	public Role getRole() {
 		return role;
 	}
@@ -54,9 +60,7 @@ public class UserRole {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_time")
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -64,8 +68,5 @@ public class UserRole {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
-	
-	
 
 }
